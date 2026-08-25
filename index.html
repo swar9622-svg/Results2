@@ -8,22 +8,22 @@
   <style>
     :root{--blue:#315B9A;--blue-dark:#1F447D;--blue-soft:#EDF4FF;--ink:#1D2B42;--muted:#66758C;--line:#DDE6F2;--surface:#FFFFFF;--bg:#F4F7FC;--danger:#B42318;--danger-bg:#FFF1F1;--success:#147148;--success-bg:#ECF8F0}
     *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#E8F1FF 0,transparent 42%),var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif}
-    .page{width:min(100%,760px);margin:0 auto;padding:calc(20px + env(safe-area-inset-top)) 14px calc(28px + env(safe-area-inset-bottom))}.hero{text-align:center;padding:20px 10px 14px}.mark{width:52px;height:52px;border-radius:18px;margin:0 auto 12px;display:grid;place-items:center;background:linear-gradient(135deg,#3E73BA,#254B84);box-shadow:0 10px 22px rgba(47,91,155,.22);color:#fff;font-size:25px}.hero h1{margin:0;font-size:1.45rem;font-weight:900;color:var(--blue-dark)}.hero p{margin:8px auto 0;max-width:440px;font-size:.84rem;line-height:1.65;font-weight:650;color:var(--muted)}
+    .page{width:min(100%,760px);margin:0 auto;padding:calc(20px + env(safe-area-inset-top)) 14px calc(28px + env(safe-area-inset-bottom))}.page.result-mode{padding:0}.hero{text-align:center;padding:20px 10px 14px}.mark{width:52px;height:52px;border-radius:18px;margin:0 auto 12px;display:grid;place-items:center;background:linear-gradient(135deg,#3E73BA,#254B84);box-shadow:0 10px 22px rgba(47,91,155,.22);color:#fff;font-size:25px}.hero h1{margin:0;font-size:1.45rem;font-weight:900;color:var(--blue-dark)}.hero p{margin:8px auto 0;max-width:440px;font-size:.84rem;line-height:1.65;font-weight:650;color:var(--muted)}
     .card{background:rgba(255,255,255,.93);border:1px solid rgba(211,223,239,.95);border-radius:22px;padding:17px;box-shadow:0 14px 30px rgba(45,72,110,.08)}.search-label{display:block;margin:0 2px 8px;font-size:.84rem;font-weight:850;color:#344A6C}.search-row{display:flex;gap:8px}.search-row input{min-width:0;flex:1;height:49px;border:1.5px solid #C9D7EB;border-radius:14px;background:#FBFDFF;padding:0 14px;font-size:1.05rem;font-weight:800;color:var(--ink);text-align:center;letter-spacing:1px;outline:none;transition:border-color .18s,box-shadow .18s}.search-row input:focus{border-color:#5B8DCF;box-shadow:0 0 0 4px rgba(91,141,207,.14)}.search-row button{border:0;border-radius:14px;min-width:104px;padding:0 16px;background:linear-gradient(135deg,#396BAD,#244D86);color:#fff;font:inherit;font-size:.95rem;font-weight:900;cursor:pointer;box-shadow:0 7px 14px rgba(42,86,145,.2);transition:transform .16s,opacity .16s}.search-row button:active{transform:scale(.97)}.search-row button:disabled{opacity:.52;cursor:not-allowed;box-shadow:none}.hint{margin:10px 2px 0;font-size:.72rem;font-weight:650;line-height:1.55;color:#738198}
     .status{display:none;margin-top:13px;border-radius:13px;padding:10px 12px;text-align:center;font-size:.8rem;font-weight:800;line-height:1.55}.status.show{display:block}.status.loading{background:#F1F6FE;color:#315B9A;border:1px solid #C9DDF7}.status.error{background:var(--danger-bg);color:var(--danger);border:1px solid #F1C5C2}.status.success{background:var(--success-bg);color:var(--success);border:1px solid #BCE0C9}
-    .result{display:none;margin-top:18px}.result.show{display:block}.result-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 2px 10px}.result-head strong{font-size:.91rem;color:#2A4F87}.result-head span{font-size:.72rem;color:#6F7F95;font-weight:700}.notice-frame{display:block;width:100%;min-height:680px;border:1px solid #D7E2F0;border-radius:18px;background:#fff;box-shadow:0 10px 24px rgba(45,72,110,.08);overflow:hidden}
-    .footer{text-align:center;font-size:.7rem;color:#8B98AA;font-weight:700;line-height:1.6;padding:18px 8px 0}@media(max-width:380px){.search-row{gap:6px}.search-row button{min-width:88px;padding:0 10px}.card{padding:14px}.hero{padding-top:12px}}
+    .result{display:none;margin-top:18px}.result.show{display:block}.page.result-mode .result{margin-top:0}.result-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 2px 10px}.result-head strong{font-size:.91rem;color:#2A4F87}.result-head span{font-size:.72rem;color:#6F7F95;font-weight:700}.notice-frame{display:block;width:100%;min-height:680px;border:1px solid #D7E2F0;border-radius:18px;background:#fff;box-shadow:0 10px 24px rgba(45,72,110,.08);overflow:hidden}.page.result-mode .notice-frame{border:0;border-radius:0;box-shadow:none}
+    .footer{text-align:center;font-size:.7rem;color:#8B98AA;font-weight:700;line-height:1.6;padding:18px 8px 0}#searchHero[hidden],#searchCard[hidden],#searchFooter[hidden],#resultHead[hidden]{display:none!important}@media(max-width:380px){.search-row{gap:6px}.search-row button{min-width:88px;padding:0 10px}.card{padding:14px}.hero{padding-top:12px}}
   </style>
 </head>
 <body>
-  <main class="page">
-    <header class="hero">
+  <main id="page" class="page">
+    <header id="searchHero" class="hero">
       <div class="mark" aria-hidden="true">📚</div>
       <h1>استعلام نتائج الطلاب</h1>
       <p>أدخل رقم الطالب لعرض إشعار المستوى وخريطة الدروس مباشرة.</p>
     </header>
 
-    <section class="card" aria-label="البحث عن نتيجة طالب">
+    <section id="searchCard" class="card" aria-label="البحث عن نتيجة طالب">
       <form id="searchForm">
         <label class="search-label" for="studentNumber">رقم الطالب</label>
         <div class="search-row">
@@ -36,11 +36,11 @@
     </section>
 
     <section id="result" class="result" aria-live="polite">
-      <div class="result-head"><strong>إشعار مستوى الطالب</strong><span id="resultMeta"></span></div>
+      <div id="resultHead" class="result-head"><strong>إشعار مستوى الطالب</strong><span id="resultMeta"></span></div>
       <iframe id="noticeFrame" class="notice-frame" title="إشعار مستوى الطالب" sandbox="allow-same-origin"></iframe>
     </section>
 
-    <footer class="footer">برنامج كشف المتابعة — تظهر البيانات وفق آخر ملف <b>data.json</b> منشور.</footer>
+    <footer id="searchFooter" class="footer">برنامج كشف المتابعة — تظهر البيانات وفق آخر ملف <b>data.json</b> منشور.</footer>
   </main>
 
   <script>
@@ -50,7 +50,12 @@
     const searchButton=document.getElementById('searchButton');
     const searchForm=document.getElementById('searchForm');
     const numberInput=document.getElementById('studentNumber');
+    const page=document.getElementById('page');
+    const searchHero=document.getElementById('searchHero');
+    const searchCard=document.getElementById('searchCard');
+    const searchFooter=document.getElementById('searchFooter');
     const result=document.getElementById('result');
+    const resultHead=document.getElementById('resultHead');
     const resultMeta=document.getElementById('resultMeta');
     const noticeFrame=document.getElementById('noticeFrame');
     let studentData=null;
@@ -106,7 +111,12 @@
       noticeFrame.style.height='680px';
       noticeFrame.srcdoc=entry.html;
       result.classList.add('show');
-      setTimeout(()=>result.scrollIntoView({behavior:'smooth',block:'start'}),80);
+      searchHero.hidden=true;
+      searchCard.hidden=true;
+      searchFooter.hidden=true;
+      resultHead.hidden=true;
+      page.classList.add('result-mode');
+      window.scrollTo({top:0,behavior:'auto'});
     });
 
     numberInput.addEventListener('input',()=>{ numberInput.value=normalizeNumber(numberInput.value); });
